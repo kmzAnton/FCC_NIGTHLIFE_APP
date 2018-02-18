@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ./partials/head %>
+    
+  </head>
+  <body>
+    <% include ./partials/header.ejs%>
+    <div class="container-fluid">
+      <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <a class="nav-item nav-link active text-center" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Log In</a>
+          <a class="nav-item nav-link text-center" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Sign Up</a>
+        </div>
+      </nav>
+      <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active text-center" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+          <small class="alert"><%= info.error_msg%></small>
+          <div class="show-first">
+            <button class="btn btn-lg btn-outline-secondary" id="local">Local</button>
+            <br><br><a href="/auth/github/callback"><button class="btn btn-lg btn-outline-secondary">GitHub</button></a>
+            <br><br><a href="/auth/vkontakte/callback"><button class="btn btn-lg btn-outline-secondary">Vkontakte</button></a>
+          </div>
+          <div class="show-second hide">
+            <form method="post" action="/login_local">
+              <input class="form-control" type="text" name="username" placeholder="Username..."><br>
+              <input class="form-control" type="password" name="password" placeholder="Password..."><br>
+              <input type="submit" class="btn btn-block btn-outline-success" value="Log in"><br>
+            </form>
+            <button class="btn btn-block btn-outline-danger" id="back">Back</button>  
+          </div>
+        </div>
+        
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+          <form method="post" action="/signup">
+            <input type="text" class="form-control" name="username" placeholder="Name..." id="username">
+              <small class="alert username"></small><br>
+            <input type="email" class="form-control" name="email" placeholder="email..." id="email">
+              <small class="alert email"></small><br>
+            <input type="text" class="form-control" name="city" placeholder="City..." id="city">
+              <small class="alert city"></small><br>
+            <input type="password" class="form-control" name="password" placeholder="Password..." id="password">
+              <small class="alert password"></small><br>
+            <input type="password" class="form-control" name="repeat" placeholder="Repeat password..." id="repeat">
+              <small class="alert repeat"></small><br><br>
+            <button type="submit" id="submit" class="btn btn-block btn-outline-info">Submit</button> 
+          </form>
+        </div>
+      </div>
+      
+    </div>
+    
+    
+    
+  </body>
+  <script type="text/javascript" src="/login_script.js"></script>
+</html>

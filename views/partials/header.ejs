@@ -1,0 +1,21 @@
+<div class="container-fluid header">
+  <div class="row justify-content-between">
+    <div>
+      <span class="col-xs-1 app_name">NightLife App</span>
+      <span class=" col-xs-2 welcome">Welcome <%= user.username%>!</span>
+    </div>
+    <div>
+      <%if(info.title !== 'Login page'){%>
+        <%if(user.username==''){%>
+          <button class="btn btn-outline-success" id="login">Log In</button>
+          <button class="btn btn-outline-success" id="signup">Sign Up</button>
+        <%}else{%>
+          <a href="/logout"><button class="btn btn-outline-success" id="logout">Log Out</button></a>
+        <%}%>
+      <%}%>
+      <%if(user.username!==''){%>
+          <a href="/logout"><button class="btn btn-outline-success" id="logout">Log Out</button></a>
+      <%}%>
+    </div>
+  </div>
+</div>

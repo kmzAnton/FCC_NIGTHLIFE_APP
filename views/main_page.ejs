@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%include ./partials/head%> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body>
+    <div class="container-fluid main_page" id="main_page">
+      
+      <div class="regPanel text-right">
+        <%if(user.username==''){%>
+          <a href="/login">Log in / Sign up</a>
+        <%}else{%>
+          <a href="/logout">Log out</a><br>
+          Hello <span class="text-muted"><b><%=user.username%></b></span>
+        <%}%>
+      </div>
+      
+      <div class="topper">
+         <br><span class="title text-center"><h2>The Night Life Co-ordinator App</h2></span><br>
+        <span class="desc text-center"><h5><i>Search a location for restaurants near you, then sign up or log in to let others know you plan to visit</i></h5></span><br><br>
+      </div>
+      <div class="search col text-center">
+        
+        <form id="searchForm" action="/search" method="post">
+          <div class="input-group mb-3">
+            <input id="search_input" name="searchReq" type="text" class="form-control" placeholder="City..." aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <input type="submit" class="btn btn-secondary" id="search_btn" value="Search">
+            </div>
+          </div>
+        </form>
+        
+      </div>
+        <div class="row res">
+          <%if(yelpData){%>
+
+            <%yelpData.forEach(item=>{%>
+
+              <div class="col-sm-3">
+                <div class="card" id="<%=item.name%>+++<%=item.id%>">
+                  <%if(item.url==""){%>
+                    <a href="https://www.gumtree.com/property-to-rent/uk/no+agency+fees" target="_blank"><img class="card-img-top" src="<%=item.image_url%>" alt="<%= item.name%>"></a>
+                  <%}else{%>
+                    <a href="<%= item.url%>" target="_blank"><img class="card-img-top" src="<%=item.image_url%>" alt="<%= item.name%>"></a>
+                  <%}%>
+                  <div class="card-body">
+                    <h6 class="card-title"><%= item.name%></h6>
+                  </div>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                      <%if(item.location){%>
+                        <b>Address:</b> <%= item.location.display_address[0]%>
+                      <%}%>
+                    </li>
+                    <li class="list-group-item">
+                      Rating 
+                      
+                      <%for(var i=1; i<=Math.floor(item.rating); i++){%>
+                        <i class="fa fa-star"></i>
+                      <%}%>
+                      <%if(item.rating.toString().length>1){%>
+                        <i class="fa fa-star-half-empty"></i>
+                      <%}%>
+                      
+                    </li>
+                    <li class="list-group-item">
+                      <%if(item.is_closed){%>
+                        Place is <span class="badge badge-danger">Closed</span>
+                      <%}else{%>
+                        Place is <span class="badge badge-success">Opened</span>
+                      <%}%>
+                    </li>
+                  </ul>
+                  <div class="card-body">
+                    <a href="<%= item.url%>" target="_blank" class="card-link">Web-page</a>
+                    <a href="#" class="badge badge-info vote" id="vote">
+                      <%if(item.isGoing){%>
+                        I won't go
+                      <%}else{%>
+                        I'll go there!
+                      <%}%>
+                    </a>
+                    <%if(item.votes){%>
+                      <span class="badge badge-warning"><span id="vote_count+<%=item.id%>"><%=item.votes%></span> going</span>
+                    <%}else{%>
+                      <span class="badge badge-warning"><span id="vote_count+<%=item.id%>">0</span> going</span>
+                    <%}%>
+                    
+                  </div>
+                </div>
+              </div>
+
+            <%})%>
+
+          <%}%>
+
+        </div>
+      
+    </div>
+  </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/main_script.js"></script>
+</html>
